@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from 'src/repositories/users.repository';
@@ -16,14 +16,21 @@ export class UsersService {
   }
 
   findOne(id: string) {
-    return this.UserRepository.findone(id)
+    const findUser = this.UserRepository.findone(id)
+    if (!findUser) throw new NotFoundException("User not found")
+    
+    return findUser;
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
+    const findUser = this.UserRepository.findone(id)
+    if (!findUser) throw new NotFoundException("User not found")
     return this.UserRepository.update(id, updateUserDto)
   }
 
   remove(id: string) {
+    const findUser = this.UserRepository.findone(id)
+    if (!findUser) throw new NotFoundException("User not found")
     return this.UserRepository.delete(id)
   }
 }
