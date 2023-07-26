@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserRepository } from 'src/repositories/users.repository';
+import { UserRepository } from 'src/modules/users/repositories/users.repository';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +13,12 @@ export class UsersService {
 
   findAll() {
     return this.UserRepository.findAll()
+  }
+
+  findByEmail(email: string) {
+    const userEmail = this.UserRepository.findByEmail(email);
+    if (!userEmail) throw new NotFoundException("User not found")
+    return userEmail;
   }
 
   findOne(id: string) {
