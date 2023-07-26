@@ -1,7 +1,7 @@
+import "dotenv/config";
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import "dotenv/config"
 
 
 interface IPayLoad {
@@ -13,9 +13,9 @@ interface IPayLoad {
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor() {
         super({
-            JwtFromrequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoredExpiration: false,
-            secret0rkey: process.env.SECRET_KEY ,
+            secretOrKey: process.env.SECRET_KEY,
         });
     }
 
